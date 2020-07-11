@@ -52,13 +52,14 @@ CREATE TABLE movies (
 	movie_id INT AUTO_INCREMENT PRIMARY KEY,
 	director_id INT,
     rating_id INT NOT NULL,
+    genre_id INT NOT NULL,
 	movie_name VARCHAR(50) NOT NULL,
 	movie_length INT,
 	release_date DATE,
 	FOREIGN KEY (director_id) REFERENCES directors (director_id)
 );
 
-INSERT INTO movies (movie_name, movie_length, release_date, director_id, rating_id)
-values ('Avatar', 162, '2009-12-18', 1, 3);
-INSERT INTO movies (movie_name, movie_length, release_date, director_id, rating_id)
-values ('Star Trek', 127, '2009-05-08', 2, 3);
+INSERT INTO movies (movie_name, movie_length, release_date, director_id, rating_id, genre_id)
+values ('Avatar', 162, '2009-12-18', 1, 3, 3);
+INSERT INTO movies (movie_name, movie_length, release_date, director_id, rating_id, genre_id)
+values ('Star Trek', 127, '2009-05-08', 2, 3, 3);

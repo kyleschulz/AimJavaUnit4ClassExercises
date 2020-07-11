@@ -2,14 +2,14 @@ package com.aim.movie.domain;
 
 import java.util.Date;
 
-public class MovieInfo {
+public class Movie {
 
     private String movieTitle;
     private int movieLength;
     private Date releaseDate;
-    private String director;
     private String genre;
     private String rating;
+    private Director director;
 
     public String getMovieTitle() {
         return movieTitle;
@@ -35,11 +35,11 @@ public class MovieInfo {
         this.releaseDate = releaseDate;
     }
 
-    public String getDirector() {
+    public Director getDirector() {
         return director;
     }
 
-    public void setDirector(String director) {
+    public void setDirector(Director director) {
         this.director = director;
     }
 

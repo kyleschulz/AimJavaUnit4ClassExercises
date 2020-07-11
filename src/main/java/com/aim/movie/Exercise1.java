@@ -5,14 +5,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-import com.aim.movie.domain.MovieInfo;
+import com.aim.movie.domain.Director;
+import com.aim.movie.domain.Movie;
 import com.aim.movie.util.MySQL;
 
 public class Exercise1 {
+
+    private static StringBuilder sql = null;
 
     public static void main(String[] args) {
 
@@ -26,17 +27,21 @@ public class Exercise1 {
                 System.exit(-1);
             }
 
-            MovieInfo movieInfo = getMovieInfo(resultSet);
+            Movie movie = getMovie(resultSet);
 
-            System.out.format("%-30.30s  %-30.30s %-30.30s %-30.30s %n", "Movie Name", "Director", "Genre", "Rating");
-            System.out.format("%-30.30s  %-30.30s %-30.30s %-30.30s %n", "----------", "--------", "-----", "------");
-
-            while (resultSet.next()) {
-                System.out.format("%-30.30s  %-30.30s%n", resultSet.getString("movie_name"),
-                        resultSet.getString("full_name"));
+            if (movie != null) {
+                System.out.format("%n%-30.30s  %-30.30s %-30.30s %-30.30s %n", "Movie Title", "Director", "Genre",
+                        "Rating");
+                System.out.format("%-30.30s  %-30.30s %-30.30s %-30.30s %n", "----------", "--------", "-----",
+                        "------");
+                System.out.format("%-31.30s ", movie.getMovieTitle());
+                System.out.format("%-30.30s ", movie.getDirector().getFullName());
+                System.out.format("%-30.30s ", movie.getGenre());
+                System.out.format("%-30.30s %n", movie.getRating());
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Connection failure.");
         } finally {
             System.out.println("\nGoodbye ...");
@@ -44,7 +49,7 @@ public class Exercise1 {
     }
 
     public static String getMovieTitleFromUser() {
-        System.out.println("This program displays the Director, Genre and Rating of a movie.\n");
+        System.out.println("\nThis program displays the Director, Genre and Rating of a movie.\n");
         System.out.print("Please enter a movie title: ");
 
         Scanner input = new Scanner(System.in);
@@ -57,11 +62,13 @@ public class Exercise1 {
         try {
 
             Statement statement = connection.createStatement();
-            StringBuilder sql = new StringBuilder();
-            sql.append("select m.movie_name, d.first_name, d.last_name, r.rating ");
+            sql = new StringBuilder();
+            sql.append("select m.movie_name, m.movie_length, m.release_date, ");
+            sql.append("d.first_name, d.last_name, r.rating, g.genre ");
             sql.append("from movies m ");
             sql.append("join directors d on d.director_id = m.director_id ");
             sql.append("join ratings r on r.rating_id = m.rating_id ");
+            sql.append("join genres g on g.genre_id = m.genre_id ");
             sql.append("where m.movie_name = '" + movieTitle + "';");
 
             ResultSet resultSet = statement.executeQuery(sql.toString());
@@ -69,25 +76,44 @@ public class Exercise1 {
 
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("\nSQL (copy the SQL statement below and run it if you're having problems): \n"
+                    + sql.toString() + "\n");
         }
         return null;
     }
 
-    public static MovieInfo getMovieInfo(ResultSet resultSet) {
-        MovieInfo movieInfo = new MovieInfo();
+    public static Movie getMovie(ResultSet resultSet) {
+        Movie movie = null;
+
         try {
-            while (resultSet.next()) {
-                movieInfo.setMovieTitle(resultSet.getString("movie_name"));
-                movieInfo.setMovieLength(resultSet.getInt("movie_length"));
-                movieInfo.setReleaseDate(resultSet.getDate("release_date"));
-                movieInfo.setDirector(resultSet.getString("movie_name"));
-                movieInfo.setMovieTitle(resultSet.getString("movie_name"));
+
+            if (resultSet.next()) {
+                movie = new Movie();
+
+                do {
+                    movie.setMovieTitle(resultSet.getString("m.movie_name"));
+                    movie.setMovieLength(resultSet.getInt("m.movie_length"));
+                    movie.setReleaseDate(resultSet.getDate("m.release_date"));
+                    movie.setGenre(resultSet.getString("g.genre"));
+                    movie.setRating(resultSet.getString("r.rating"));
+
+                    // Since movie has a Director object as a member variable, lets create one
+                    Director director = new Director();
+                    director.setFirstName(resultSet.getString("d.first_name"));
+                    director.setLastName(resultSet.getString("d.last_name"));
+
+                    // Now add the director object to the movie object
+                    movie.setDirector(director);
+                } while (resultSet.next());
+
             }
+
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            System.out.println("\nSQL (copy the SQL statement below and run it if you're having problems): \n"
+                    + sql.toString() + "\n");
         }
-        return movieInfo;
+        return movie;
     }
 
 }
