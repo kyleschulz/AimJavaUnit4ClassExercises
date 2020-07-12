@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Movie {
 
+    private int id;
     private String movieTitle;
     private int movieLength;
     private Date releaseDate;
@@ -12,6 +13,14 @@ public class Movie {
     private String rating;
     private Director director;
     private List<Actor> actors;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getMovieTitle() {
         return movieTitle;
@@ -67,6 +76,21 @@ public class Movie {
 
     public void setActors(List<Actor> actors) {
         this.actors = actors;
+    }
+
+    public String toString() {
+        StringBuilder toString = new StringBuilder();
+        toString.append("Title=" + movieTitle);
+        toString.append(", Length=" + movieLength);
+        toString.append(", Genre=" + genre);
+        toString.append(", Rating=" + rating);
+        if (director != null) {
+            toString.append(", Director: " + director);
+        }
+        if (actors != null & actors.size() > 0) {
+            toString.append(", Actors:" + actors);
+        }
+        return toString.toString();
     }
 
 }

@@ -15,6 +15,7 @@ CREATE TABLE directors (
 insert into directors (first_name, last_name, date_of_birth) values ('James', 'Cameron', '1954-08-16');
 insert into directors (first_name, last_name, date_of_birth) values ('J.J.', 'Abrams', '1966-06-27');
 insert into directors (first_name, last_name, date_of_birth) values ('Stephen', 'Spielberg', '1946-12-18');
+insert ignore into directors (first_name, last_name, date_of_birth) values ('James', 'Cameron', '1954-08-16');
 
 DROP TABLE IF EXISTS ratings;
 CREATE TABLE ratings (
@@ -33,6 +34,7 @@ CREATE TABLE genres (
 	genre VARCHAR(25) NOT NULL
 );
 insert into genres (genre) values ('Action');
+insert into genres (genre) values ('Animation');
 insert into genres (genre) values ('Comedy');
 insert into genres (genre) values ('Sci-Fi');
 insert into genres (genre) values ('Drama, Sci-Fi');
@@ -82,22 +84,3 @@ INSERT INTO movie_actors (movie_id, actor_id) VALUES (2, 3);
 INSERT INTO movie_actors (movie_id, actor_id) VALUES (2, 4);
 INSERT INTO movie_actors (movie_id, actor_id) VALUES (2, 5);
 INSERT INTO movie_actors (movie_id, actor_id) VALUES (3, 6);
-
-select
-m.movie_name, m.movie_length, m.release_date,
-d.first_name, d.last_name,
-r.rating, g.genre
-from movies m
-join directors d on d.director_id = m.director_id
-join ratings r on r.rating_id = m.rating_id
-join genres g on g.genre_id = m.genre_id
-where m.movie_name = 'Avatar';
-
-select a.first_name, a.last_name
-from actors a
-join movie_actors ma on ma.actor_id = a.actor_id
-join movies m on m.movie_id = ma.movie_id
-where m.movie_name = 'Avatar';
-
-select a.first_name, a.last_name from actors a join movie_actors ma on ma.actor_id = a.actor_id
-join movies m on m.movie_id = ma.movie_id where m.movie_name = 'Avatar';
