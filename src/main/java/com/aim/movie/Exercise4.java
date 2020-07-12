@@ -66,7 +66,7 @@ public class Exercise4 {
     }
 
     public static boolean askUserToAddMovie(Scanner input) {
-        System.out.print("\nThis movie does not exist. Would you like to add movie? ");
+        System.out.print("\nThis movie does not exist. Would you like to add movie (y/n)? ");
 
         try {
 
