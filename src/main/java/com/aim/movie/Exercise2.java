@@ -106,10 +106,11 @@ public class Exercise2 {
 
                     // Now add the director object to the movie object
                     movie.setDirector(director);
-                } while (resultSet.next());
 
-                List<Actor> actors = getActors(connection, movieTitle);
-                movie.setActors(actors);
+                    List<Actor> actors = getActors(connection, movieTitle);
+                    movie.setActors(actors);
+
+                } while (resultSet.next());
 
             }
 
