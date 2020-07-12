@@ -14,6 +14,7 @@ CREATE TABLE directors (
 );
 insert into directors (first_name, last_name, date_of_birth) values ('James', 'Cameron', '1954-08-16');
 insert into directors (first_name, last_name, date_of_birth) values ('J.J.', 'Abrams', '1966-06-27');
+insert into directors (first_name, last_name, date_of_birth) values ('Stephen', 'Spielberg', '1946-12-18');
 
 DROP TABLE IF EXISTS ratings;
 CREATE TABLE ratings (
@@ -34,6 +35,7 @@ CREATE TABLE genres (
 insert into genres (genre) values ('Action');
 insert into genres (genre) values ('Comedy');
 insert into genres (genre) values ('Sci-Fi');
+insert into genres (genre) values ('Drama, Sci-Fi');
 
 DROP TABLE IF EXISTS actors;
 CREATE TABLE actors (
@@ -47,6 +49,7 @@ insert into actors (first_name, last_name, date_of_birth) values ('Zoe', 'Saldan
 insert into actors (first_name, last_name, date_of_birth) values ('Sigourney', 'Weaver', '1949-10-08');
 insert into actors (first_name, last_name, date_of_birth) values ('John', 'Cho', '1972-06-16');
 insert into actors (first_name, last_name, date_of_birth) values ('Chris', 'Pine', '1980-08-26');
+insert into actors (first_name, last_name, date_of_birth) values ('Richard', 'Dreyfuss', '1947-10-29');
 
 CREATE TABLE movies (
 	movie_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -63,6 +66,8 @@ INSERT INTO movies (movie_name, movie_length, release_date, director_id, rating_
 values ('Avatar', 162, '2009-12-18', 1, 3, 3);
 INSERT INTO movies (movie_name, movie_length, release_date, director_id, rating_id, genre_id)
 values ('Star Trek', 127, '2009-05-08', 2, 3, 3);
+INSERT INTO movies (movie_name, movie_length, release_date, director_id, rating_id, genre_id)
+values ('Close Encounters of the Third Kind', 135, '1977-11-16', 3, 2, 4);
 
 DROP TABLE IF EXISTS movie_actors;
 CREATE TABLE movie_actors (
@@ -76,6 +81,7 @@ INSERT INTO movie_actors (movie_id, actor_id) VALUES (1, 3);
 INSERT INTO movie_actors (movie_id, actor_id) VALUES (2, 3);
 INSERT INTO movie_actors (movie_id, actor_id) VALUES (2, 4);
 INSERT INTO movie_actors (movie_id, actor_id) VALUES (2, 5);
+INSERT INTO movie_actors (movie_id, actor_id) VALUES (3, 6);
 
 select
 m.movie_name, m.movie_length, m.release_date,
@@ -93,3 +99,5 @@ join movie_actors ma on ma.actor_id = a.actor_id
 join movies m on m.movie_id = ma.movie_id
 where m.movie_name = 'Avatar';
 
+select a.first_name, a.last_name from actors a join movie_actors ma on ma.actor_id = a.actor_id
+join movies m on m.movie_id = ma.movie_id where m.movie_name = 'Avatar';
