@@ -100,7 +100,7 @@ public class Exercise4 {
         System.out.print("Genre: ");
         movie.setGenre(input.nextLine());
 
-        System.out.print("Rating: ");
+        System.out.print("Rating (G, PG, PG-13, R): ");
         movie.setRating(input.nextLine());
 
         System.out.print("Director: ");
