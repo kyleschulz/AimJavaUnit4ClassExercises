@@ -1,6 +1,7 @@
 package com.aim.movie.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Movie {
 
@@ -10,6 +11,7 @@ public class Movie {
     private String genre;
     private String rating;
     private Director director;
+    private List<Actor> actors;
 
     public String getMovieTitle() {
         return movieTitle;
@@ -57,6 +59,14 @@ public class Movie {
 
     public void setRating(String rating) {
         this.rating = rating;
+    }
+
+    public List<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(List<Actor> actors) {
+        this.actors = actors;
     }
 
 }

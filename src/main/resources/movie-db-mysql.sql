@@ -63,3 +63,33 @@ INSERT INTO movies (movie_name, movie_length, release_date, director_id, rating_
 values ('Avatar', 162, '2009-12-18', 1, 3, 3);
 INSERT INTO movies (movie_name, movie_length, release_date, director_id, rating_id, genre_id)
 values ('Star Trek', 127, '2009-05-08', 2, 3, 3);
+
+DROP TABLE IF EXISTS movie_actors;
+CREATE TABLE movie_actors (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    movie_id INT NOT NULL,
+    actor_id INT NOT NULL
+);
+INSERT INTO movie_actors (movie_id, actor_id) VALUES (1, 1);
+INSERT INTO movie_actors (movie_id, actor_id) VALUES (1, 2);
+INSERT INTO movie_actors (movie_id, actor_id) VALUES (1, 3);
+INSERT INTO movie_actors (movie_id, actor_id) VALUES (2, 3);
+INSERT INTO movie_actors (movie_id, actor_id) VALUES (2, 4);
+INSERT INTO movie_actors (movie_id, actor_id) VALUES (2, 5);
+
+select
+m.movie_name, m.movie_length, m.release_date,
+d.first_name, d.last_name,
+r.rating, g.genre
+from movies m
+join directors d on d.director_id = m.director_id
+join ratings r on r.rating_id = m.rating_id
+join genres g on g.genre_id = m.genre_id
+where m.movie_name = 'Avatar';
+
+select a.first_name, a.last_name
+from actors a
+join movie_actors ma on ma.actor_id = a.actor_id
+join movies m on m.movie_id = ma.movie_id
+where m.movie_name = 'Avatar';
+

@@ -2,26 +2,8 @@ package com.aim.movie.domain;
 
 import java.util.Date;
 
-public class Director {
-    private String firstName;
-    private String lastName;
+public class Director extends Person {
     private Date dateOfBirth;
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public Date getDateOfBirth() {
         return dateOfBirth;
@@ -31,7 +13,4 @@ public class Director {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
 }
